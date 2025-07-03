@@ -34,14 +34,14 @@ def test_azure_openai_direct():
         print("Required environment variables:")
         print("  - AZURE_OPENAI_ENDPOINT")
         print("  - AZURE_OPENAI_API_KEY")
-        print("  - AZURE_API_VERSION (optional)")
-        print("  - AZURE_DEPLOYMENT_NAME (optional)")
+        print("  - AZURE_API_VERSION")
+        print("  - AZURE_DEPLOYMENT_NAME")
         return False
 
     print(f"Azure Configuration:")
     print(f"  Endpoint: {azure_endpoint}")
-    print(f"  API Version: {azure_api_version or 'default'}")
-    print(f"  Deployment: {azure_deployment or 'default'}")
+    print(f"  API Version: {azure_api_version}")
+    print(f"  Deployment: {azure_deployment}")
     print()
 
     try:
@@ -50,7 +50,7 @@ def test_azure_openai_direct():
 
         # Construct the Azure model string for LiteLLM
         # Format: azure/{deployment_name}
-        model = f"azure/{azure_deployment}" if azure_deployment else "azure/gpt-4"
+        model = f"azure/{azure_deployment}"
 
         print(f"Testing LiteLLM connection with model: {model}")
 
@@ -79,11 +79,6 @@ def test_azure_openai_direct():
 
             print("✅ Azure OpenAI connection successful!")
             print(f"Response: {content}")
-
-            # Print usage info if available
-            if hasattr(response, "usage"):
-                usage = response.usage
-                print(f"Tokens used: {getattr(usage, 'total_tokens', 'unknown')}")
 
             return True
         else:
